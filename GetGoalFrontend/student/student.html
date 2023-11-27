@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="student.css">
+</head>
+<body>
+    <h1>Student Pannel</h1>
+    <div>
+        <button id="studentLogin" >Login</button>
+        <button id="studentSignUp">SignUp</button>
+    </div>
+    <script>
+       let login=document.getElementById("studentLogin");
+       let signup=document.getElementById("studentSignUp");
+       login.addEventListener("click",()=>{
+        window.location.href='./loginForm.html';
+        console.log("Login Form")
+       })
+       signup.addEventListener("click",()=>{
+        window.location.href='./signup.html';
+        console.log("signup Form")
+       })
+
+    </script>
+</body>
+</html>

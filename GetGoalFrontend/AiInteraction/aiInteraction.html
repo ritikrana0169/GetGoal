@@ -79,29 +79,22 @@ var formDataJSON = JSON.stringify(formData);
 
 // Save the JSON string to local storage
 localStorage.setItem('formData', formDataJSON);
-        // Construct the URL with form data
-        var apiUrl = 'http://localhost:8080/bot/chat?prompt= in this chat you have to react as an interviewer.\n '+
-        ' and this interview will be technical interview ask technical questions only.\n do not give so much question at one time in one response give only one question'+
-        'you are an interviewer the details of the student is name ' + name +
-            ' and student techStack is ' + techStack +
-            ' and student skillLevel is ' + skillLevel + ' make sure do not ask from previously asked questions'+
-            ' in your response do not add any kind of other thing just directly start from the question';
 
-        // Make the GET request to the API
-        
-        fetch(apiUrl)
-            .then(response => response.text())  // Parse response as text
-            .then(data => {
-                // Handle the API response here (e.g., update UI with the response)
-                localStorage.setItem('apiResponse', data);
+       
+       window.speechSynthesis.cancel();
+
+       // speak text
+
+       const utterance = new SpeechSynthesisUtterance("Welcome to the interview prime, "+name+"... Let's start your interview");
+       window.speechSynthesis.speak(utterance);
+          
+
+
+
                 window.location.href='interviewPannel.html';
                
 
-                // Now 'data' contains the response as a string, you can process it further as needed
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        
     }
 </script>
 

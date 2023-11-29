@@ -1,5 +1,5 @@
 let adminButton=document.getElementById("adminPannel");
-let studentButton=document.getElementById("studentPannel");
+let studentButton=document.getElementById("studentPanel");
 
 
 adminButton.addEventListener("click",()=>{

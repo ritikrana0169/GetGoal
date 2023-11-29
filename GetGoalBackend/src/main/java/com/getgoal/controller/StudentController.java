@@ -27,10 +27,10 @@ return new ResponseEntity<>(st,HttpStatus.CREATED);
 }
 
 @PostMapping("/login")
-public ResponseEntity<String> loginStudentHandler(@RequestBody LoginCredentials lc) {
-System.out.println(lc.getEmail());
-	String st=studentService.loginStudent(lc);
-	if(st=="wrong credentials") {
+public ResponseEntity<Student> loginStudentHandler(@RequestBody LoginCredentials lc) {
+//System.out.println(lc.getEmail());
+	Student st=studentService.loginStudent(lc);
+	if(st==null) {
 		return new ResponseEntity<>(st,HttpStatus.BAD_REQUEST);
 	}
 	return new ResponseEntity<>(st,HttpStatus.ACCEPTED);

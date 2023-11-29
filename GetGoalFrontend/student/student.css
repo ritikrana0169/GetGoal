@@ -1,42 +1,38 @@
-/* Reset some default styles */
-body, h1, button {
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
 }
 
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f9f9f9;
+header {
     text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
+    background-color: #3498db;
+    color: #fff;
+    padding: 20px;
+    border: 3px solid black;
 }
 
-
-h1 {
-    color: #3498db;
-    margin-bottom: 20px;
-    font-size: 36px;
+main {
+    max-width: 600px;
+    margin: 20px auto;
 }
 
-div {
+.button-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
     background-color: #3498db;
     color: #fff;
-    padding: 15px 30px;
-    border: none;
+    border: 1px solid rgb(0, 0, 0);
     border-radius: 5px;
-    cursor: pointer;
-    margin: 10px;
-    font-size: 20px;
     transition: background-color 0.3s ease;
 }
 
@@ -44,22 +40,17 @@ button:hover {
     background-color: #2980b9;
 }
 
-#studentLogin {
-    background-color: #2ecc71;
-}
+/* Responsive Styling */
+@media screen and (max-width: 600px) {
+    main {
+        padding: 0 10px;
+    }
 
-#studentSignUp {
-    background-color: #e74c3c;
-}
-
-/* Responsive Styles */
-@media only screen and (max-width: 600px) {
-    h1 {
-        font-size: 28px;
+    .button-container {
+        flex-direction: row;
     }
 
     button {
-        font-size: 16px;
-        padding: 12px 24px;
+        width: 100%;
     }
 }

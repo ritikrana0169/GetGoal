@@ -1,26 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Form</title>
-    <link rel="stylesheet" href="login.css">
-</head>
-<body>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body style="background: url('../4893812.jpg') no-repeat">
     <div class="container">
-        <h1>Login</h1>
-        <form id="loginForm">
-            <label for="username">Username/Mobile:</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username or mobile number" required>
+      <h1>Login</h1>
+      <form id="loginForm">
+        <label for="username">Username/Mobile:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter your username or mobile number"
+          required
+        />
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
 
-            <button type="submit">Login</button>
-        </form>
-        <p id="error-message"></p>
+        <button type="submit">Login</button>
+      </form>
+      <p id="error-message"></p>
     </div>
 
-    <script src="script.js"></script>
-</body>
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          var username = document.getElementById("username").value;
+          var password = document.getElementById("password").value;
+
+          var data = {
+            email: username,
+            password: password,
+          };
+
+          fetch("http://localhost:8080/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((data) => {
+              if (data.ok) {
+                return data.json();
+              } else {
+                document.getElementById("error-message").innerText =
+                  "Wrong Credentials";
+              }
+            })
+            .then((res) => {
+                console.log(res.name)
+                var formData = {
+                name: res.name,
+                techStack: res.tech,
+                skillLevel: res.level,
+              };
+              const formDataJSON = JSON.stringify(formData);
+              localStorage.setItem("formData", formDataJSON);
+              window.speechSynthesis.cancel();
+
+              // speak text
+
+              const utterance = new SpeechSynthesisUtterance(
+                "Welcome to the interview prime, " +
+                  res.name +
+                  "... Let's start your interview"
+              );
+              window.speechSynthesis.speak(utterance);
+
+              window.location.href = "../AiInteraction/interviewPannel.html";
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        });
+    </script>
+  </body>
 </html>

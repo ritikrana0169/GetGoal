@@ -4,15 +4,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    /* height: 100vh; */
     margin: 0;
 }
 
 .container {
-    max-width: 400px;
+    max-width: 600px;
     width: 100%;
     padding: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.856);
     background-color: #fff;
     border-radius: 8px;
     box-sizing: border-box;
@@ -20,8 +20,8 @@ body {
 
 h1 {
     color: #3498db;
-    margin-bottom: 20px;
-    font-size: 36px;
+    margin-bottom: 5px;
+    font-size: 26px;
 }
 
 form {
@@ -31,16 +31,16 @@ form {
 }
 
 label {
-    margin-top: 10px;
+    margin-top: 0px;
     color: #555;
     font-size: 16px;
 }
 
 input, select {
     width: 100%;
-    padding: 12px;
+    padding:  8.5px;
     margin-top: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
@@ -63,7 +63,7 @@ button {
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #194b6d;
 }
 
 #success-message, #error-message {

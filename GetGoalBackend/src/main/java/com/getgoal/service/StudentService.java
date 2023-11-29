@@ -24,17 +24,18 @@ public class StudentService {
 				
 	}
 
-	public String loginStudent(LoginCredentials lc) {
+	public Student loginStudent(LoginCredentials lc) {
 		Student st=studentRepo.findByEmail(lc.getEmail());
 		
-		if(st!=null) {
-			
-				return "Login SuccessFull";
+		if (st != null && st.getPassword().toLowerCase().equals(lc.getPassword().toLowerCase())) {
+
+			System.out.println(st.getEmail());
+				return st;
 			
 		}
 		
 				
 		
-		return "wrong credentials";
+		return null;
 	}
 }

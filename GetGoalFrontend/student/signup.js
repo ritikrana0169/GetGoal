@@ -36,6 +36,7 @@ fetch(apiUrl, {
     if (response.ok) {
       console.log("All Ok")
       alert("User Registered");
+      window.location.href="./loginForm.html"
     }
     return response.json();
   })

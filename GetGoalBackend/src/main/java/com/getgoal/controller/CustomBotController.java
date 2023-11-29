@@ -2,6 +2,7 @@ package com.getgoal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.getgoal.model.ChatGPTRequest;
 import com.getgoal.model.ChatGptResponse;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/bot")
 public class CustomBotController {

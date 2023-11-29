@@ -39,7 +39,7 @@ fetch(apiUrl, {
     }
     return response.json();
   })
-//   .catch(error => {
-//     console.error('Error:', error.message || error);
-//   });
+  .catch(error => {
+    console.error('Error:', error.message || error);
+  });
 });

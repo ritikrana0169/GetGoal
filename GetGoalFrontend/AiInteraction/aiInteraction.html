@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .submit-btn {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <form id="submitForm">
+            <input type="text" id="nameInput" class="form-input" placeholder="Name">
+            <input type="text" id="techStackInput" class="form-input" placeholder="Tech Stack">
+            <input type="text" id="skillLevelInput" class="form-input" placeholder="Skill Level">
+
+            <button type="button" onclick="submitForm()" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+   
+<script>
+    function submitForm() {
+        var name = document.getElementById('nameInput').value;
+        var techStack = document.getElementById('techStackInput').value;
+        var skillLevel = document.getElementById('skillLevelInput').value;
+
+        // Make sure all fields are filled
+        if (name.trim() === '' || techStack.trim() === '' || skillLevel.trim() === '') {
+            alert('Please fill in all fields.');
+            return;
+        }
+        var formData = {
+    name: name,
+    techStack: techStack,
+    skillLevel: skillLevel
+};
+
+// Convert the object to a JSON string
+var formDataJSON = JSON.stringify(formData);
+
+// Save the JSON string to local storage
+localStorage.setItem('formData', formDataJSON);
+        // Construct the URL with form data
+        var apiUrl = 'http://localhost:8080/bot/chat?prompt= in this chat you have to react as an interviewer.\n '+
+        ' and this interview will be technical interview ask technical questions only.\n do not give so much question at one time in one response give only one question'+
+        'you are an interviewer the details of the student is name ' + name +
+            ' and student techStack is ' + techStack +
+            ' and student skillLevel is ' + skillLevel + ' make sure do not ask from previously asked questions'+
+            ' in your response do not add any kind of other thing just directly start from the question';
+
+        // Make the GET request to the API
+        
+        fetch(apiUrl)
+            .then(response => response.text())  // Parse response as text
+            .then(data => {
+                // Handle the API response here (e.g., update UI with the response)
+                localStorage.setItem('apiResponse', data);
+                window.location.href='interviewPannel.html';
+               
+
+                // Now 'data' contains the response as a string, you can process it further as needed
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+
+</body>
+
+</html>

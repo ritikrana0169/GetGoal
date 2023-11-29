@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text-to-Speech</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      color: #fff;
+      background-image: linear-gradient(-45deg, #74ebd5, #9face6);
+      font: 1.25rem/1 'Poppins', sans-serif;
+    }
+
+    .wrapper {
+      display: grid;
+      gap: 20px;
+      width: 600px;
+      max-width: calc(100vw - 40px);
+      padding: 30px;
+      border-radius: 10px;
+      background-color: #0003;
+    }
+
+    #text {
+      display: block;
+      height: 100px;
+      padding: 20px;
+      border: none;
+      font-size: inherit;
+      font-family: inherit;
+      resize: vertical;
+    }
+
+    #speak {
+      padding: 10px;
+      border: 1px solid #fff;
+      color: #fff;
+      background-color: #0009;
+      font-size: inherit;
+      font-family: inherit;
+      cursor: pointer;
+      appearance: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <label for="text">Text to speak:</label>
+    <textarea id="text">Hello! Feel free to change this text and don't forget to turn your volume on.</textarea>
+    <button id="speak">Speak Text</button>
+  </div>
+
+  <script>
+    // grab the UI elements to work with
+    const textEl = document.getElementById('text');
+    const speakEl = document.getElementById('speak');
+
+    // click handler
+    speakEl.addEventListener('click', speakText);
+
+    function speakText() {
+      // stop any speaking in progress
+      window.speechSynthesis.cancel();
+
+      // speak text
+      const text = textEl.value;
+      const utterance = new SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(utterance);
+    }
+  </script>
+</body>
+
+</html>

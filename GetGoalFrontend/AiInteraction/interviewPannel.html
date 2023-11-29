@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+<style>
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    width: 90%;
+    margin: auto;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+h3 {
+    color: #555;
+}
+
+p#question {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#answerButton {
+    background-color: #2196F3;
+}
+
+#answerButton:hover {
+    background-color: #0b7dda;
+}
+
+#nextQuestionBtn {
+    background-color: #ff9800;
+}
+
+#nextQuestionBtn:hover {
+    background-color: #e68a00;
+}
+
+/* Feedback button style */
+button:nth-child(3) {
+    background-color: #e91e63;
+}
+
+button:nth-child(3):hover {
+    background-color: #c2185b;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    button {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+#result{
+			height: 200px;
+			border: 1px solid #ccc;
+			padding: 10px;
+			box-shadow: 0 0 10px 0 #bbb;
+			margin-bottom: 30px;
+			font-size: 14px;
+			line-height: 25px;
+		}
+
+</style>
+
+<body>
+    <h2>Welocme to Interview Pannel</h2>
+<h3>Question:</h3><p id="question"></p>
+    <button id="answerButton">Answer</button>
+    <button id="nextQuestionBtn">Next</button>
+    <button id="feedBack">FeedBack</button>
+    <div id="result"></div>
+    <script>
+var storedDataJSON = localStorage.getItem('formData');
+var storedData = JSON.parse(storedDataJSON);
+var result=document.getElementById("result");
+var name=storedData.name;
+var techStack=storedData.techStack;
+var skillLevel=storedData.skillLevel;
+var feedBack=document.getElementById("feedBack");
+
+var question=document.getElementById("question");
+var answerButton=document.getElementById("answerButton");
+let nextQuestionBtn=document.getElementById('nextQuestionBtn');
+nextQuestionBtn.addEventListener("click",()=>{
+    
+    var apiUrl = 'http://localhost:8080/bot/chat?prompt= in this chat you have to react as an interviewer '+
+        '  do not give so much question at one time in one response give only one question'+
+        'you are an interviewer the details of the student is name ' + name +
+            ' and student techStack is ' + techStack +
+            ' and student skillLevel is ' + skillLevel + ' make sure do not ask from previously asked questions'+
+            ' in your response do not add any kind of other thing just directly start from the question';
+            
+            // Make the GET request to the API
+            
+        fetch(apiUrl)
+            .then(response => response.text())  // Parse response as text
+            .then(data => {
+                // Handle the API response here (e.g., update UI with the response)
+                localStorage.setItem('apiResponse', data);
+                const storedDataRR = localStorage.getItem('apiResponse');
+                console.log(storedDataRR);
+                startSpeech(storedDataRR);
+                question.innerText=storedDataRR;
+
+                
+
+               
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+})
+function startSpeech(myText){
+
+   
+      // stop any speaking in progress
+      window.speechSynthesis.cancel();
+
+      // speak text
+      
+      const utterance = new SpeechSynthesisUtterance(myText);
+      window.speechSynthesis.speak(utterance);
+    
+
+
+        }
+
+        
+        
+
+        
+        
+        
+        
+        
+        const storedDataR = localStorage.getItem('apiResponse');
+      
+        // question.innerText=storedDataR;
+    // console.log(storedDataR);
+    
+
+
+
+    answerButton.addEventListener("click",()=>{
+        startConverting();
+    })
+
+    function startConverting () {
+
+if('webkitSpeechRecognition' in window) {
+    var speechRecognizer = new webkitSpeechRecognition();
+    speechRecognizer.continuous = true;
+    speechRecognizer.interimResults = true;
+    speechRecognizer.lang = 'en-US';
+    speechRecognizer.start();
+
+    var finalTranscripts = '';
+
+    speechRecognizer.onresult = function(event) {
+        var interimTranscripts = '';
+        for(var i = event.resultIndex; i < event.results.length; i++){
+            var transcript = event.results[i][0].transcript;
+            transcript.replace("\n", "<br>");
+            if(event.results[i].isFinal) {
+                finalTranscripts += transcript;
+            }else{
+                interimTranscripts += transcript;
+            }
+        }
+        result.innerHTML = finalTranscripts + '<span style="color: #999">' + interimTranscripts + '</span>';
+        localStorage.setItem('studentResponse', finalTranscripts);
+    };
+    speechRecognizer.onerror = function (event) {
+
+    };
+}else {
+    result.innerHTML = 'Your browser is not supported. Please download Google chrome or Update your Google chrome!!';
+}	
+}
+feedBack.addEventListener("click",()=>{
+    let apiRespo=localStorage.getItem('apiResponse');
+    let studentRespo=localStorage.getItem('studentResponse');
+    
+
+var prompt2='http://localhost:8080/bot/chat?prompt= react as an interviewer you  have asked a question to the student that '+ apiRespo+' and he answered you '+studentRespo +' you have to check this answer and'+
+ ' give some feedback how he can improve his answer feedback should not be more than 40 words. give feedback as you are a interviewer as first person '
+
+
+    fetch(prompt2)
+            .then(response => response.text())  // Parse response as text
+            .then(data => {
+                // Handle the API response here (e.g., update UI with the response)
+                
+                console.log(data);
+                startSpeech(data);
+                question.innerText=data;
+
+                
+
+               
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+})
+
+
+
+    </script>
+</body>
+</html>
